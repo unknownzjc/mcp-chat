@@ -1,0 +1,21 @@
+{
+  "name": "mcp-chat",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "esno src/index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.32.1",
+    "@modelcontextprotocol/sdk": "^1.0.3",
+    "axios": "^1.7.9"
+  },
+  "devDependencies": {
+    "esno": "^4.8.0"
+  }
+}
