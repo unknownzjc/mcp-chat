@@ -1,16 +1,11 @@
-import { Client } from '@modelcontextprotocol/sdk/client/index.js'
-import Anthropic from '@anthropic-ai/sdk'
+import 'dotenv/config'
+// import { Client } from '@modelcontextprotocol/sdk/client/index.js'
+import MCPClient from './client.js'
 async function main() {
-    const client = new Anthropic({
-        baseURL: 'https://aihubmix.com',
-        apiKey: 'sk-NM84YzNi6OjARyVJBaE1532679684b059bC030B4Ec6d2987'
-    })
-    const message = await client.messages.create({
-        model: "claude-3-5-sonnet-20241022",
-        max_tokens: 1024,
-        messages: [{ role: 'user', content: 'Hello, Claude' }]
-    })
-    console.log(message.content)
+    const client = new MCPClient()
+    // await client.createCompletion('hello', [])
+    await client.createCompletion('给 client.ts 加一个 provider 的属性', [])
 }
+
 
 main()
