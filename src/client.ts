@@ -14,7 +14,6 @@ export default class MCPClient {
             apiKey
         })
         this.client = client
-        
     }
     async createCompletion(prompt: string, tools: any[]) {
         const message = await this.client.messages.create({
