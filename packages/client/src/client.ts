@@ -4,32 +4,32 @@ import { StdioClientTransport} from '@modelcontextprotocol/sdk/client/stdio.js'
 import { CallToolResultSchema } from '@modelcontextprotocol/sdk/types.js'
 import { FileSystemResult } from '@mcpchat/server'
 import ora from 'ora'
+import { ProviderFactory, ProviderType } from './providers/factory';
+import { AIProvider, ProviderConfig, ProviderMessage } from './providers/base';
+export interface MCPClientConfig {
+    provider: ProviderType;
+    apiKey: string;        // 改为必需
+    model: string;         // 改为必需
+    baseURL?: string;      // 保持可选
+    maxTokens?: number;    // 保持可选
+}
 export default class MCPClient {
-    provider: any
+    provider: AIProvider
     client: Client
-    constructor() {
-        const baseURL = process.env.ANTHROPIC_API_BASE_URL || 'https://aihubmix.com'
-        const apiKey = process.env.ANTHROPIC_API_KEY
-
-        if (!apiKey) {
-            throw new Error('ANTHROPIC_API_KEY environment variable is required')
+    constructor(config: MCPClientConfig) {
+        const providerConfig: ProviderConfig = {
+            apiKey: config.apiKey,
+            model: config.model,
+            baseURL: config.baseURL,
+            maxTokens: config.maxTokens
         }
-        const client = new Anthropic({
-            baseURL,
-            apiKey
-        })
-        this.provider = client
-        // this.tools = tools
+
+        this.provider = ProviderFactory.createProvider(config.provider, providerConfig)
     }
     async createCompletion(prompt: string) {
-        const messages = [{ role: 'user', content: prompt }]
+        const messages: ProviderMessage[] = [{ role: 'user', content: prompt }]
         const tools = await this.getTools()
-        const response = await this.provider.messages.create({
-            model: "claude-3-5-sonnet-20241022",
-            max_tokens: 1024,
-            messages,
-            tools
-        })
+        const response = await this.provider.createCompletion(messages, tools)
         let finalContent: string[] = []
         for(const content of response.content) {
             if(content.type === 'text') {
