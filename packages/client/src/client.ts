@@ -53,11 +53,7 @@ export default class MCPClient {
                             role: 'user',
                             content: result.content[0].text
                         })
-                        const response = await this.provider.messages.create({
-                            model: "claude-3-5-sonnet-20241022",
-                            max_tokens: 1024,
-                            messages
-                        })
+                        const response = await this.provider.createCompletion(messages)
                         finalContent.push(response.content[0].text)
                     }
                 }
