@@ -1,0 +1,24 @@
+{
+    "mcpServers": {
+      "memory": {
+        "command": "npx",
+        "args": ["-y", "@modelcontextprotocol/server-memory"]
+      },
+      "filesystem": {
+        "command": "npx",
+        "args": [
+            "-y",
+            "@modelcontextprotocol/server-filesystem",
+            "/Users/unknownzjc/Documents/Code/mcp-chat"
+        ]
+      },
+      "github": {
+        "command": "npx",
+        "args": ["-y", "@modelcontextprotocol/server-github"],
+        "env": {
+          "GITHUB_PERSONAL_ACCESS_TOKEN": "<YOUR_TOKEN>"
+        }
+      }
+    }
+  }
+  
